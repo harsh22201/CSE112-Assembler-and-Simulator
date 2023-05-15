@@ -3,8 +3,6 @@ registers  = {"R0":"000", "R1":"001", "R2":"010", "R3":"011", "R4":"100", "R5":"
 variables = {}
 labels = {} 
 
-
-
 def dec2bin(number):
     bnum = str(bin(number))[2:]
     s = 7 - len(bnum)
@@ -34,7 +32,6 @@ def float2bin(real_no):
     else:
         return False
 
-
 def scan_input():  # Take input from file
     f = open("stdin.txt",'r')
     lines = f.readlines()
@@ -59,10 +56,10 @@ def update_var_label(raw_assembly):
         label_line+=1
         line_list = line.split()
         if(line_list[0] == 'var'):
-            if var_ntbegin:
-                raise Exception(f'Error: Variables not declared at beginning, line {line_no}')
             if( 2 != len(line_list)):
                 raise Exception(f'Error: General Syntax Error, line {line_no}')
+            if var_ntbegin:
+                raise Exception(f'Error: Variables not declared at beginning, line {line_no}')
             else:
                 variables[line_list[1]]=i
                 i+=1
@@ -138,7 +135,7 @@ def verify_regimm(syntax,line_no):
         raise Exception(f'Error: General Syntax Error, line {line_no}')
     for x in range(1, len(imm)):
         if not imm[x].isdigit():
-            raise Exception(f'Error: General Syntax Error, line {line_no}')
+            raise Exception(f'Error: Illegal Immediate values, line {line_no}')
     if int(imm[1:])>127:
         raise Exception(f'Error: Illegal Immediate values, line {line_no}')
 
@@ -184,7 +181,7 @@ def inspect_syntax(assembly):
         if(instruction not in ISA):
             raise Exception(f'Error: Invalid Instruction, line {line_no}')
         syntax = line[1:]
-        if ( instruction in ["add", "sub", "mul", "xor","or", "and","addf","subf"]):
+        if ( instruction in ["add", "sub", "mul", "xor","or", "and"]):
             verify_regregreg(syntax,line_no)
         elif (instruction in ["jmp","jlt","je","jgt"]):
             verify_jump(syntax,line_no)
@@ -196,8 +193,6 @@ def inspect_syntax(assembly):
             verify_regreg(syntax,line_no)
         elif (instruction == 'mov'):
             verify_mov(syntax,line_no)
-        elif (instruction == 'movf'):
-            verify_movf(syntax,line_no)
         elif instruction is not  assembly[-1][1][0]:
             raise Exception(f'Error: Can\'t execute lines after hlt, line {line_no}')
         else : 
@@ -267,10 +262,9 @@ def main():
     f.write(binary)
     f.close()
 
-try : 
+try :
     main()
 except Exception as error:
     f = open("stdout.txt",'w')
     f.write(str(error))
     f.close()
-
