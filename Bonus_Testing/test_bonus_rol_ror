@@ -1,0 +1,5 @@
+mov R1 $127
+rol R1 $3
+mov R1 $127
+ror R1 $3
+hlt

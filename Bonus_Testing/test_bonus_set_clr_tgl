@@ -1,0 +1,5 @@
+mov R1 $127
+clr R1 $3
+set R1 $3
+tgl R1 $4
+hlt
