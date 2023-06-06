@@ -165,8 +165,7 @@ def update_var_label(raw_assembly):
                 raise Exception(f"Error: General Syntax Error, line {line_no}")
             else:
                 labels[label[:-1]] = label_line
-                # NVN
-                #assembly.append([line_no, line_list[1:]])
+        
             var_ntbegin = True
             continue
         var_ntbegin = True
