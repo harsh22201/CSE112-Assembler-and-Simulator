@@ -442,8 +442,7 @@ def main():
         labels[label] = dec2bin(labels[label] - len(variables) - skipLabels)
         skipLabels += 1
     for variable in variables:
-        # NVN
-        #variables[variable] = dec2bin(variables[variable] + len(assembly))
+  
         variables[variable] = dec2bin(variables[variable])
     inspect_syntax(assembly)
     binary = generate_binary(assembly)
